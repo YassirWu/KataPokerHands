@@ -26,6 +26,13 @@ const defaultCardDeskProperties: CardDeskProperties = {
   isFlush: false,
   highestCardOnCardDesk: { suit: "C", value: 5 },
   duplicatedValueCards: { pairs: [], threes: [], fours: [] },
+  sortedCards: [
+    { value: 2, suit: "C" },
+    { value: 3, suit: "C" },
+    { value: 4, suit: "C" },
+    { value: 5, suit: "C" },
+    { value: 6, suit: "C" },
+  ],
 };
 
 describe("straightFullPokerHand", () => {

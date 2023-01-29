@@ -78,4 +78,17 @@ describe("parseCard", () => {
   it("should return stringified card with Ace", () => {
     expect(parseCard("AS")).toStrictEqual({ value: "A", suit: "S" });
   });
+
+  it("should throw error when invalid input", () => {
+    expect(() => parseCard("")).toThrow();
+    expect(() => parseCard("S")).toThrow();
+    // invalid value
+    expect(() => parseCard("1S")).toThrow();
+    expect(() => parseCard("0S")).toThrow();
+    expect(() => parseCard("BS")).toThrow();
+    expect(() => parseCard("ZS")).toThrow();
+    // invalid suit
+    expect(() => parseCard("3B")).toThrow();
+    expect(() => parseCard("AY")).toThrow();
+  });
 });

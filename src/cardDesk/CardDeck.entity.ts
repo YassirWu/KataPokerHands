@@ -13,6 +13,7 @@ export type CardDeskProperties = {
   isStraight: boolean;
   isFlush: boolean;
   highestCardOnCardDesk: Card;
+  sortedCards: Card[];
 };
 
 export default CardDeck;

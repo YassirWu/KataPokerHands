@@ -77,6 +77,33 @@ const checkResultFromPokerHandScore: CheckResultFunction = ({
   return getWinnerFromScore(firstPlayerScore, secondPlayerScore);
 };
 
+const compareScoresWhenPokerHandIsHighScore: CheckResultFunction = ({
+  firstPlayerPokerHand,
+  secondPlayerPokerHand,
+}) => {
+  if (secondPlayerPokerHand.name !== POKER_HAND_TYPE_NAME_HIGH_CARD) {
+    return null;
+  }
+
+  const firstPlayerSortedCardsReversed =
+    firstPlayerPokerHand.sortedCards.reverse();
+  const secondPlayerSortedCardsReversed =
+    secondPlayerPokerHand.sortedCards.reverse();
+  for (let i = 0; i < firstPlayerPokerHand.sortedCards.length; i++) {
+    const firstPlayerScore =
+      mappingCardValueByIndex[firstPlayerSortedCardsReversed[i].value];
+    const secondPlayerScore =
+      mappingCardValueByIndex[secondPlayerSortedCardsReversed[i].value];
+
+    const winner = getWinnerFromScore(firstPlayerScore, secondPlayerScore);
+    if (winner) {
+      return winner;
+    }
+  }
+
+  return null;
+};
+
 const checkResultFromHighestScore: CheckResultFunction = ({
   firstPlayerPokerHand,
   secondPlayerPokerHand,
@@ -119,6 +146,9 @@ const checkWinner = (
   >(
     // check result from poker hand score
     checkResultFromPokerHandScore,
+    // special case when both player have high score as poker hand
+    // need to check first high score, if they are equals, check the second and so on
+    compareScoresWhenPokerHandIsHighScore,
     // that means they have both same poker hand score
     // need to check the highest value of card
     checkResultFromHighestScore,

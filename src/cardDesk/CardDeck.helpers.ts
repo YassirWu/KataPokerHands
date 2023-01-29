@@ -6,7 +6,11 @@ import CardDeck, {
 } from "./CardDeck.entity";
 
 export const parseCardDeck = (stringifiedCardDesk: string): CardDeck => {
-  const stringifiedCards = stringifiedCardDesk.split(" ");
+  const stringifiedCards = stringifiedCardDesk.trim().split(" ");
+
+  if (stringifiedCards.length !== 5) {
+    throw new Error("parseCardDeck invalid input");
+  }
 
   return stringifiedCards.map((stringifiedCard) =>
     parseCard(stringifiedCard)
@@ -113,5 +117,6 @@ export const buildCardDeckProperties = (
     isStraight: getIsStraight(cards),
     isFlush: getIsFlush(cards),
     highestCardOnCardDesk: getHigherCard(cards),
+    sortedCards: sortCardsByIndex(cards),
   };
 };

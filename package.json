@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "play": "yarn build && node lets-play.js"
   },
   "dependencies": {
     "typescript": "^4.9.4"

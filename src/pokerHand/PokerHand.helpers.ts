@@ -19,7 +19,7 @@ import PokerHand, {
 
 type ChoosePokerHandFunction = (
   cardDeskProperties: CardDeskProperties
-) => PokerHand | null;
+) => Omit<PokerHand, "sortedCards"> | null;
 
 export const straightFullPokerHand: ChoosePokerHandFunction = (
   cardDeskProperties
@@ -132,7 +132,7 @@ export const isPairPokerHand: ChoosePokerHandFunction = (
 };
 export const highCardPokerHand = (
   cardDeskProperties: CardDeskProperties
-): PokerHand => {
+): Omit<PokerHand, "sortedCards"> => {
   return {
     name: POKER_HAND_TYPE_NAME_HIGH_CARD,
     higherCard: cardDeskProperties.highestCardOnCardDesk,
@@ -145,7 +145,7 @@ export const getBetterPokerHand = (cards: CardDeck): PokerHand => {
   const pokerHand = pipeUntilResults<
     ChoosePokerHandFunction,
     CardDeskProperties,
-    PokerHand
+    Omit<PokerHand, "sortedCards">
   >(
     straightFullPokerHand,
     isFourOfAKindPokerHand,
@@ -156,7 +156,10 @@ export const getBetterPokerHand = (cards: CardDeck): PokerHand => {
     isTwoPairsPokerHand,
     isPairPokerHand,
     highCardPokerHand
-  )(cardDeskProperties);
+  )(cardDeskProperties) as Omit<PokerHand, "sortedCards">;
 
-  return pokerHand as PokerHand;
+  return {
+    ...pokerHand,
+    sortedCards: [...cardDeskProperties.sortedCards],
+  };
 };

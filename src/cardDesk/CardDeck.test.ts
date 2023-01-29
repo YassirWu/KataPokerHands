@@ -35,6 +35,11 @@ describe("parseCardDeck", () => {
       { value: 4, suit: "H" },
     ]);
   });
+
+  it("should throw error when invalid length", () => {
+    expect(() => parseCardDeck("2H 4S 4C 2D 4H 4H")).toThrow();
+    expect(() => parseCardDeck("2H 4S 4C 2D")).toThrow();
+  });
 });
 
 describe("getHigherCard", () => {
@@ -360,6 +365,13 @@ describe("buildCardDeckProperties", () => {
     expect(result.duplicatedValueCards.fours.length).toBe(0);
     expect(result.highestCardOnCardDesk.suit).toBe("C");
     expect(result.highestCardOnCardDesk.value).toBe(6);
+    expect(result.sortedCards).toStrictEqual([
+      { value: 2, suit: "C" },
+      { value: 3, suit: "C" },
+      { value: 4, suit: "C" },
+      { value: 5, suit: "C" },
+      { value: 6, suit: "C" },
+    ]);
   });
 });
 

@@ -25,6 +25,7 @@ type PokerHand = {
   name: PokerHandTypeName;
   higherCard: Card;
   secondHighestCard?: Card;
+  sortedCards: Card[];
 };
 
 export default PokerHand;
